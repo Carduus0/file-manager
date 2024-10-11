@@ -1,0 +1,20 @@
+{
+  "name": "file-manager",
+  "version": "1.0.0",
+  "description": "RS_School task",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Carduus0/file-manager.git"
+  },
+  "author": "SvetKhan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Carduus0/file-manager/issues"
+  },
+  "homepage": "https://github.com/Carduus0/file-manager#readme"
+}
