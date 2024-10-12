@@ -3,11 +3,15 @@ import path from 'path'
 import { cwd, chdir } from 'process'
 
 export const goUp = () =>{
-const currentDir = cwd()
-const parentDir = path.dirname(currentDir)
+  const currentDir = cwd()
+  const parentDir = path.dirname(currentDir)
 if(parentDir !== currentDir){
     chdir(parentDir)
 }
+if(parentDir == currentDir){
+  console.log('You are already in the root directory.');
+}
+
 console.log(`You are currently in ${cwd()}`);
 }
 
@@ -16,8 +20,8 @@ try{
 chdir(dirPath)
 console.log(`You are currently in ${cwd()} `);
 
-}catch{
-console.error('Operation failed')
+}catch(err){
+console.error('Operation failed', err)
 }
 }
 

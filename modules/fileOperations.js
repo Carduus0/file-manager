@@ -4,7 +4,9 @@ import path from 'path';
 
 export const readFile = async (filePath) => {
   try{
-    const stream = createReadStream(filePath, 'utf-8')
+    const fullPath = path.resolve(filePath)
+    const stream = createReadStream(fullPath, 'utf-8')
+
     stream.on('data', (chunk) =>{
       console.log(chunk);
     })
@@ -12,6 +14,10 @@ export const readFile = async (filePath) => {
     stream.on('end', () =>{
     console.log('File reading completed.');
     })
+
+    stream.on('error', (err) =>{
+        console.error('Operation failed', err);
+      })
   } catch (err){
       console.error('Operation failed', err);
   }
@@ -19,42 +25,58 @@ export const readFile = async (filePath) => {
 
 export const createFile = async (filePath) => {
     try{
-await fs.rename(oldPath, newPath)
-console.log(`File ${filePath} created.`);
-    } catch{
+        const fullPath = path.resolve(filePath)
+        await fs.writeFile(fullPath,'', {flag: 'wx'})
+        console.log(`File ${filePath} created.`);
+    } catch(err){
         console.error('Operation failed', err); 
     }
     }
 
 export const renameFile = async (oldPath, newPath) => {
     try{
-await fs.writeFile(filePath,'', {flag: 'wx'})
-console.log(`File renamed from ${oldPath} to ${newPath}.`);
-    } catch{
+        const oldFullPath = path.resolve(oldPath)
+        const newFullPath = path.resolve(newPath)
+        await fs.rename(oldFullPath, newFullPath)
+        console.log(`File renamed from ${oldPath} to ${newPath}.`);
+    } catch(err){
         console.error('Operation failed', err); 
     }
 }
 
 export const copyFile = async (sourcePath, destinationPath) => {
     try{
-      const readStream = createReadStream(sourcePath)
-      const writeStream = createWriteStream(destinationPath)
+        const srcFullPath = path.resolve(sourcePath)
+        const destFullPath = path.resolve(destinationPath)
+
+      const readStream = createReadStream(srcFullPath)
+      const writeStream = createWriteStream(destFullPath)
 
       readStream.pipe(writeStream)
 
       readStream.on('end', () =>{
         console.log(`File copied to ${destinationPath}.`);
       })
+      readStream.on('error', (err) =>{
+        console.error('Operation failed', err);
+      })
+      writeStream.on('error', (err) =>{
+        console.error('Operation failed', err);
+      })
     } catch (err){
         console.error('Operation failed', err);
     }
 }
 
-export const moveFile = async (sourcePath, destinationPath) => {
+export const moveFile = async (sourcePath, destinationDir) => {
     try{
-await copyFile(sourcePath, destinationPath)
-await fs.unilink(sourcePath)
-console.log(`File moved to ${destinationPath}.`);
+        const srcFullPath = path.resolve(sourcePath)
+        const destFileName = path.basename(sourcePath);
+        const destFullPath = path.join(destinationDir, destFileName)
+
+        await copyFile(srcFullPath, destFullPath)
+        await fs.unlink(srcFullPath)
+        console.log(`File moved to ${destFullPath}.`);
     } catch (err){
         console.error('Operation failed', err);
     }
@@ -62,8 +84,9 @@ console.log(`File moved to ${destinationPath}.`);
 
 export const deleteFile = async (filePath) => {
     try{
-await fs.unilink(filePath)
-console.log(`File ${filePath} deleted.`);
+        const fullPath = path.resolve(filePath)
+        await fs.unlink(fullPath)
+        console.log(`File ${filePath} deleted.`);
     } catch (err){
         console.error('Operation failed', err);
     }

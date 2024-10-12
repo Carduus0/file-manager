@@ -18,6 +18,23 @@ const printCurrentDirectory = () =>{
 }
 printCurrentDirectory()
 
+const validCommands = [
+   'up',
+   'ls',
+   'cd',
+   'cat',
+   'add',
+   'rn',
+   'cp',
+   'mv',
+   'rm',
+   '.exit'
+]
+const showHelp = ()=>{
+   console.log('Fvaliable commands:');
+   validCommands.forEach(cmd => console.log(` - ${cmd}`))
+}
+
 process.stdin.on('data', async (data) =>{
     const input = data.toString().trim()
 
@@ -35,33 +52,33 @@ case input.startsWith('cd'):
    changeDirectory(dirPath)
    break;
 
-case input.startsWith('read'):
-   const readFilePath = input.slice(5).trim();
+case input.startsWith('cat'):
+   const readFilePath = input.slice(4).trim();
    await readFile(readFilePath);
    break;
 
-case input.startsWith('create'):
-   const createFilePath = input.slice(7).trim();
+case input.startsWith('add'):
+   const createFilePath = input.slice(4).trim();
    await createFile(createFilePath);
    break;
 
-case input.startsWith('rename'):
-   const [oldFilePath, newFilePath] = input.slice(7).trim().split(' ');
+case input.startsWith('rn'):
+   const [oldFilePath, newFilePath] = input.slice(3).trim().split(' ');
    await renameFile(oldFilePath, newFilePath);
    break;
 
-case input.startsWith('copy'):
-   const [sourcePath, destinationPath] = input.slice(5).trim().split(' ');
+case input.startsWith('cp'):
+   const [sourcePath, destinationPath] = input.slice(3).trim().split(' ');
    await copyFile(sourcePath, destinationPath);
    break;
 
-case input.startsWith('move'):
-   const [srcPath, destPath] = input.slice(5).trim().split(' ');
+case input.startsWith('mv'):
+   const [srcPath, destPath] = input.slice(3).trim().split(' ');
    await moveFile(srcPath, destPath);
    break;
 
-case input.startsWith('delete'):
-   const deleteFilePath = input.slice(7).trim();
+case input.startsWith('rm'):
+   const deleteFilePath = input.slice(3).trim();
    await deleteFile(deleteFilePath);
    break;
 
@@ -71,6 +88,7 @@ case input ==='.exit':
 
 default:
         console.log('Invalid input');
+        showHelp();
 }
 printCurrentDirectory()
 })
