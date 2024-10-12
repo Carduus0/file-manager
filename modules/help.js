@@ -13,10 +13,11 @@ export const validCommands = [
     'os --homedir',
     'os --username',
     'os --architecture',
+    'hash',
     '.exit'
 ]
 
 export const showHelp = ()=>{
-    console.log('Fvaliable commands:');
+    console.log('Avaliable commands:');
     validCommands.forEach(cmd => console.log(` - ${cmd}`))
 }

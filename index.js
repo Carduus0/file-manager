@@ -3,6 +3,7 @@ import { showHelp } from './modules/help.js';
 import { goUp, changeDirectory, listDirectory } from './modules/navigation.js';
 import { readFile, createFile, renameFile, copyFile, moveFile, deleteFile } from './modules/fileOperations.js';
 import { getEOL, getCPUsInfo, getHomeDir, getCurrentUser, getCPUArchitecture } from './modules/osInfo.js';
+import { hashFile } from './modules/hash.js';
 
 const args = process.argv.slice(2)
 console.log(process.argv);
@@ -68,6 +69,11 @@ case input.startsWith('rm'):
    const deleteFilePath = input.slice(3).trim();
    await deleteFile(deleteFilePath);
    break;
+
+   case input.startsWith('hash'):
+      const filePath = input.slice(5).trim();
+      await hashFile(filePath);
+      break;
 
    case input ==='os --EOL':
     getEOL()
