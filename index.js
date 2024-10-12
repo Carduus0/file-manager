@@ -1,6 +1,8 @@
 import { parseArguments } from './modules/cli.js'
+import { showHelp } from './modules/help.js';
 import { goUp, changeDirectory, listDirectory } from './modules/navigation.js';
 import { readFile, createFile, renameFile, copyFile, moveFile, deleteFile } from './modules/fileOperations.js';
+import { getEOL, getCPUsInfo, getHomeDir, getCurrentUser, getCPUArchitecture } from './modules/osInfo.js';
 
 const args = process.argv.slice(2)
 console.log(process.argv);
@@ -18,22 +20,7 @@ const printCurrentDirectory = () =>{
 }
 printCurrentDirectory()
 
-const validCommands = [
-   'up',
-   'ls',
-   'cd',
-   'cat',
-   'add',
-   'rn',
-   'cp',
-   'mv',
-   'rm',
-   '.exit'
-]
-const showHelp = ()=>{
-   console.log('Fvaliable commands:');
-   validCommands.forEach(cmd => console.log(` - ${cmd}`))
-}
+
 
 process.stdin.on('data', async (data) =>{
     const input = data.toString().trim()
@@ -81,6 +68,22 @@ case input.startsWith('rm'):
    const deleteFilePath = input.slice(3).trim();
    await deleteFile(deleteFilePath);
    break;
+
+   case input ==='os --EOL':
+    getEOL()
+    break;
+   case input ==='os --cpus':
+    getCPUsInfo()
+    break;
+   case input ==='os --homedir':
+    getHomeDir()
+    break;
+   case input ==='os --username':
+    getCurrentUser
+    break;
+   case input === 'os --architecture':
+    getCPUArchitecture()
+    break;
 
 case input ==='.exit':
     console.log(`Thank you for using File Manager, ${username}, goodbye!`);
