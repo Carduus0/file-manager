@@ -1,27 +1,48 @@
 import os from 'os'
 
 export const getEOL = ()=> {
-    console.log('System End-Of-Line:', JSON.stringify(os.EOL));
+    try{
+        console.log('System End-Of-Line:', JSON.stringify(os.EOL));
+    } catch(err){
+        console.error('Error getting End-Of-line:', err)
+    }
+
 }
 
 export const getCPUsInfo = ()=> {
-    const cpus = os.cpus()
-    console.log(`Total cpus: ${cpus.length}`);
-    cpus.forEach((cpu,index)=>{
-        console.log(`CPU ${index + 1}: Model - ${cpu.model}, Clock Rate - ${(cpu.speed / 1000).toFixed(2)} GHz`) 
-    })  
+    try{
+        const cpus = os.cpus()
+        console.log(`Total cpus: ${cpus.length}`);
+        cpus.forEach((cpu,index)=>{
+            console.log(`CPU ${index + 1}: Model - ${cpu.model}, Clock Rate - ${(cpu.speed / 1000).toFixed(2)} GHz`) 
+        })  
+    } catch(err){
+        console.error('Error getting CPU info :', err)
+    }
 }
 
 export const getHomeDir = ()=> {
-    console.log('Home directory:', os.homedir() );
+    try{
+        console.log('Home directory:', os.homedir() );
+    } catch(err){
+        console.error('Error getting home directory:', err)
+    }
 }
 
 export const getCurrentUser = ()=> {
-    console.log('Current userName:', os.userInfo().username );
+    try{
+        console.log('Current userName:', os.userInfo().username );
+    } catch(err){
+        console.error('Error getting current user information :', err)
+    }
 }
 
 export const getCPUArchitecture = ()=> {
-    console.log('CPU Architecture:', os.arch());
+    try{
+        console.log('CPU Architecture:', os.arch());
+    } catch(err){
+        console.error('Error getting CPU architecture :', err)
+    }
 }
 
 
