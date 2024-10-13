@@ -7,9 +7,8 @@ import { hashFile } from './modules/hash.js';
 import { compressFile } from './modules/compression.js';
 import { deCompressFile } from './modules/decompression.js';
 
-const args = process.argv.slice(2)
-
-const username = parseArguments(args)
+const usernameFromEnv = process.env.npm_config_username;
+const username = usernameFromEnv || 'Anonymous';
 
 if(username){
     console.log(`Welcome to  the File Manager, ${username}`);  
@@ -95,7 +94,7 @@ case input.startsWith('rm'):
     getHomeDir()
     break;
    case input ==='os --username':
-    getCurrentUser
+    getCurrentUser()
     break;
    case input === 'os --architecture':
     getCPUArchitecture()
