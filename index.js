@@ -4,9 +4,11 @@ import { goUp, changeDirectory, listDirectory } from './modules/navigation.js';
 import { readFile, createFile, renameFile, copyFile, moveFile, deleteFile } from './modules/fileOperations.js';
 import { getEOL, getCPUsInfo, getHomeDir, getCurrentUser, getCPUArchitecture } from './modules/osInfo.js';
 import { hashFile } from './modules/hash.js';
+import { compressFile } from './modules/compression.js';
+import { deCompressFile } from './modules/decompression.js';
 
 const args = process.argv.slice(2)
-console.log(process.argv);
+
 const username = parseArguments(args)
 
 if(username){
@@ -74,6 +76,14 @@ case input.startsWith('rm'):
       const filePath = input.slice(5).trim();
       await hashFile(filePath);
       break;
+
+   case input.startsWith('compress'):
+      const [source, destination] = input.slice(9).trim().split(' ')
+      await compressFile(source, destination);
+      break;
+   case input.startsWith('decompress'):
+      const [src, dest] = input.slice(11).trim().split(' ')
+      await deCompressFile(src, dest);
 
    case input ==='os --EOL':
     getEOL()

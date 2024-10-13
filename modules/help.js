@@ -14,6 +14,8 @@ export const validCommands = [
     'os --username',
     'os --architecture',
     'hash',
+    'compress',
+    'decompress',
     '.exit'
 ]
 
