@@ -33,12 +33,14 @@ export const createFile = async (filePath) => {
     }
     }
 
-export const renameFile = async (oldPath, newPath) => {
+export const renameFile = async (oldPath, newFilename) => {
     try{
         const oldFullPath = path.resolve(oldPath)
-        const newFullPath = path.resolve(newPath)
+        const dir = path.dirname(oldFullPath)
+        const newFullPath = path.join(dir, newFilename)
+        
         await fs.rename(oldFullPath, newFullPath)
-        console.log(`File renamed from ${oldPath} to ${newPath}.`);
+        console.log(`File renamed from ${oldPath} to ${newFilename}.`);
     } catch(err){
         console.error('Operation failed', err); 
     }
