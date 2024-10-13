@@ -1,4 +1,4 @@
-import { parseArguments } from './modules/cli.js'
+import os from 'os'
 import { showHelp } from './modules/help.js';
 import { goUp, changeDirectory, listDirectory } from './modules/navigation.js';
 import { readFile, createFile, renameFile, copyFile, moveFile, deleteFile } from './modules/fileOperations.js';
@@ -16,6 +16,8 @@ if(username){
     console.log('Username not provided. Please run the program with --username=your_username.');
     process.exit(1)
 }
+
+process.chdir(os.homedir())
 
 const printCurrentDirectory = () =>{
    console.log(`You are currently in ${process.cwd()}`);
