@@ -12,7 +12,7 @@ export const readFile = async (filePath) => {
     })
   
     stream.on('end', () =>{
-    console.log('File reading completed.');
+    console.log('\nFile reading completed.');
     })
 
     stream.on('error', (err) =>{
@@ -38,7 +38,7 @@ export const renameFile = async (oldPath, newFilename) => {
         const oldFullPath = path.resolve(oldPath)
         const dir = path.dirname(oldFullPath)
         const newFullPath = path.join(dir, newFilename)
-        
+
         await fs.rename(oldFullPath, newFullPath)
         console.log(`File renamed from ${oldPath} to ${newFilename}.`);
     } catch(err){
@@ -61,6 +61,9 @@ export const copyFile = async (sourcePath, destinationPath) => {
       })
       readStream.on('error', (err) =>{
         console.error('Operation failed', err);
+      })
+      writeStream.on('finish', () =>{
+        console.log(`File copied to ${destinationPath}`);
       })
       writeStream.on('error', (err) =>{
         console.error('Operation failed', err);

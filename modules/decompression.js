@@ -13,8 +13,9 @@ export const deCompressFile = async(filePath, destination)=>{
     const brotliDecompress = createBrotliDecompress()
 
   await  pipeline(readStream, brotliDecompress, writeStream)
-            console.error('Compression failed', err);    
+  console.log(`File decompressed to ${destFullPath}`);
+
 } catch (err){
-    console.log(`File compressed to ${destFullPath}`);
+    console.error('Decompression failed', err);
 }
  }
