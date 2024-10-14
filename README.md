@@ -1,2 +1,5 @@
 # file-manager
-## If the command npm run start -- --username=John does not start, please try with the command node index.js -- --username=John
+
+## npm run start -- --username=your_username
+
+## You can see a list of commands by typing help or h
