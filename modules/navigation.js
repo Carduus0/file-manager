@@ -53,22 +53,25 @@ export const listDirectory =  async (dirPath) =>{
     const items = await readdir(cwd(), {withFileTypes:true})
     const directories = []
     const files = []
+    const tableData = []
 
     for(const item of items){
        if(item.isDirectory()){
-         directories.push(item.name)
+         directories.push({ Name: item.name, Type: 'Folder' })
        } else if(item.isFile()){
-         files.push(item.name)
+         files.push({ Name: item.name, Type: 'File' })
        }
     }
-    directories.sort()
-    files.sort()
+    directories.sort((a, b) => a.Name.localeCompare(b.Name))
+    files.sort((a, b) => a.Name.localeCompare(b.Name))
 
-    console.log('Folders: ');
-    directories.forEach(dir => console.log(`${dir}`))
+    tableData.push(...directories, ...files);
+    // console.log('Folders: ');
+    // directories.forEach(dir => console.log(`${dir}`))
     
-    console.log('Files:');
-    files.forEach(file => console.log(` ${file}`) )
+    // console.log('Files:');
+    // files.forEach(file => console.log(` ${file}`) )
+    console.table(tableData)
     } catch {
     console.error('Operation failed')
     }
