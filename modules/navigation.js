@@ -9,13 +9,12 @@ const rootDir = path.parse(cwd()).root
 export const goUp = () =>{
   const currentDir = cwd()
   const parentDir = path.dirname(currentDir)
-  console.log('currentDir', currentDir);
-  console.log('rootDir', rootDir);
   
   if(parentDir !== currentDir){
-     if(parentDir === rootDir){
+     if(currentDir === rootDir){
        console.log('You cannot go higher than your root directory')
      }else{
+
       try{
         chdir(parentDir)
         console.log(`You are currently in ${cwd()}`);
